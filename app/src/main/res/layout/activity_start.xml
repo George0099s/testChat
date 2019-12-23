@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartActivity">
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chat"/>
+        <Button
+            android:id="@+id/register"
+            android:text="go to register"
+            android:layout_below="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/login"
+        android:text="go to login"
+        android:layout_below="@+id/register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</RelativeLayout>
