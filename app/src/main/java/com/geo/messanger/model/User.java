@@ -1,47 +1,77 @@
 package com.geo.messanger.model;
 
-import java.util.HashMap;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class User {
+public class User implements Parcelable {
 
-    private String mId;
-    private String mUsername;
-    private String mImageURL;
+    private String id;
+    private String userName;
+    private String imageURL;
 
-    public User(String mId, String mUsername, String mImageURL) {
-        this.mId = mId;
-        this.mUsername = mUsername;
-        this.mImageURL = mImageURL;
+    public User(String id, String userName, String imageURL) {
+        this.id = id;
+        this.userName = userName;
+        this.imageURL = imageURL;
     }
 
     public User(){
 
     }
 
-    public User(HashMap<String, String> hashMap) {
+    protected User(Parcel in) {
+        id = in.readString();
+        userName = in.readString();
+        imageURL = in.readString();
     }
 
-    public String getmId() {
-        return mId;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(userName);
+        dest.writeString(imageURL);
     }
 
-    public void setmId(String mId) {
-        this.mId = mId;
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
-    public String getmUsername() {
-        return mUsername;
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    public String getId() {
+        return id;
     }
 
-    public void setmUsername(String mUsername) {
-        this.mUsername = mUsername;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getmImageURL() {
-        return mImageURL;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setmImageURL(String mImageURL) {
-        this.mImageURL = mImageURL;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+
 }

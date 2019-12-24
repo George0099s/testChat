@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +26,7 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
     private static final String TAG = "RegisterActivity";
-    User user;
+
     private Button mBtnRegister;
     private EditText mUserNameEdit, mEmailEdit, mPasswordEdit;
     private FirebaseAuth mAuth;
@@ -41,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Register");
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        user = new User();
+
 
         mBtnRegister = findViewById(R.id.register);
         mUserNameEdit = findViewById(R.id.user_name);
@@ -85,16 +84,19 @@ public class RegisterActivity extends AppCompatActivity {
                         hashMap.put("id", userId);
                         hashMap.put("userName", userName);
                         hashMap.put("imageURL", "default");
-                        user = new User();
-                        user.setmUsername(userName);
-                        Log.d(TAG, "onComplete: sss" + user.getmUsername());
+                        final User user = new User();
+                        user.setUserName(userName);
+                        user.setId(userId);
+                        user.setImageURL("default");
+
                         mReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()){
+
                                     Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
+                                    intent.putExtra("user", user);
                                     startActivity(intent);
                                     finish();
                                 }

@@ -22,7 +22,7 @@
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="username"/>
+            tools:text="userName"/>
     </androidx.appcompat.widget.Toolbar>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"

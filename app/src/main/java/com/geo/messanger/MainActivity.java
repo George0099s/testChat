@@ -15,8 +15,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.TabWidget;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView mUserImg;
     private TextView mUsername;
 
+
     private FirebaseUser mFirebaseUser;
     private DatabaseReference mReference;
     @Override
@@ -48,27 +47,25 @@ public class MainActivity extends AppCompatActivity {
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
-
-
+        final Intent intent = getIntent();
         mUserImg = findViewById(R.id.profile_img);
         mUsername = findViewById(R.id.user_name);
 
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mReference = FirebaseDatabase.getInstance().getReference("Users").child(mFirebaseUser.getUid());
-
         mReference.addValueEventListener(new ValueEventListener(){
+
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Log.d(TAG, "onDataChange: user " + user.getmId());
-                mUsername.setText(user.getmUsername());
-//
-//                if(user.getmImageURL().equals("default")){
-//                    mUserImg.setImageResource(R.mipmap.ic_launcher_round);
-//                } else {
-//                    Glide.with(MainActivity.this).load(user.getmImageURL()).into(mUserImg);
-//                }
+                mUsername.setText(user.getUserName());
+
+                if(user.getImageURL().equals("default")){
+                    mUserImg.setImageResource(R.mipmap.ic_launcher_round);
+                } else {
+                    Glide.with(MainActivity.this).load(user.getImageURL()).into(mUserImg);
+                }
             }
 
             @Override
