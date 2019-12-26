@@ -8,7 +8,7 @@ public class User implements Parcelable {
     private String id;
     private String userName;
     private String imageURL;
-
+    private String status;
     public User(String id, String userName, String imageURL) {
         this.id = id;
         this.userName = userName;
@@ -74,4 +74,11 @@ public class User implements Parcelable {
     }
 
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

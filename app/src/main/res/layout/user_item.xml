@@ -19,4 +19,14 @@
         android:layout_toRightOf="@id/profile_img"
         android:layout_centerVertical="true"
         android:textSize="18sp"/>
+
+    <ImageView
+        android:id="@+id/img_on"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/user_name"
+        android:layout_toRightOf="@id/profile_img"
+        android:background="#000"
+        android:visibility="gone" />
+
 </RelativeLayout>

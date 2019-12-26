@@ -1,11 +1,5 @@
 package com.geo.messanger;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +8,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.geo.messanger.adapter.MessageAdapter;
@@ -46,7 +46,7 @@ public class MessageActivity extends AppCompatActivity {
     List<Chat> mChat;
     RecyclerView recyclerView;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
@@ -65,7 +65,7 @@ public class MessageActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(MessageActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 
@@ -142,10 +142,10 @@ public class MessageActivity extends AppCompatActivity {
                 mChat.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Chat chat = snapshot.getValue(Chat.class);
-                        if(chat.getReceiver().equals(myId) && chat.getSender().equals(userId) ||
-                                chat.getReceiver().equals(userId) &&  chat.getSender().equals(myId)){
-                                mChat.add(chat);
-                        }
+                    if(chat.getReceiver().equals(myId) && chat.getSender().equals(userId) ||
+                            chat.getReceiver().equals(userId) &&  chat.getSender().equals(myId)){
+                        mChat.add(chat);
+                    }
 
                     messageAdapter = new MessageAdapter(MessageActivity.this, mChat, imageURL);
                     recyclerView.setAdapter(messageAdapter);
@@ -158,5 +158,26 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void status(String status) {
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(mUser.getUid());
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("status", status);
+
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        status("offline");
+        super.onPause();
     }
 }
